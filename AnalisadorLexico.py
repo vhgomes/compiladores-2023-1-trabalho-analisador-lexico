@@ -68,7 +68,7 @@ def tokenizar_codigo_fonte(codigo_fonte):
     return tokens
 
 if __name__ == '__main__':
-    with open('testes/teste5.c', 'r') as file:
+    with open('testes/teste3.c', 'r') as file:
         input = file.read()
         tokens = tokenizar_codigo_fonte(input)
         for token in tokens:
