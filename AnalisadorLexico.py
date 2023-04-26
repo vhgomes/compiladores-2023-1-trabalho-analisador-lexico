@@ -9,6 +9,7 @@ def tokenizar_codigo_fonte(codigo_fonte):
     padrao_keyword = re.compile(r'\b(int|char|long|short|float|double|void|if|else|for|while|do|break|continue|struct|switch|case|default|return|printf)\b')
     padrao_operadores = re.compile(r'(\+\+|--|\+=|-=|\*=|/=|%=|==|!=|<=|>=|&&|\|\||[;+\-*/%.,<>&|!^=~])')
     padrao_inteiros = re.compile(r'\d+')
+    padrao_textual = re.compile(r'\".*?\"')
     padrao_ponto_flutuante = re.compile(r'(\d+\.\d+)')
     padrao_delimitador = re.compile(r"\[|\]|\(|\)|\{|\}|\;|\,|\:")
     
@@ -20,7 +21,6 @@ def tokenizar_codigo_fonte(codigo_fonte):
             posicao = match_espaco_branco.end()
             continue
         
-
         match_identificador = padrao_identificador.match(codigo_fonte, posicao)
         if match_identificador:
             identificador = match_identificador.group()
@@ -31,6 +31,12 @@ def tokenizar_codigo_fonte(codigo_fonte):
             else:
                 tokens.append(('Identificador', identificador))
                 posicao += len(identificador)
+            continue
+
+        match_textual = padrao_textual.match(codigo_fonte, posicao)
+        if match_textual:
+            tokens.append(('Textual', match_textual.group()))
+            posicao += len(match_textual.group())
             continue
 
         match_delimitador = padrao_delimitador.match(codigo_fonte, posicao)
@@ -45,7 +51,6 @@ def tokenizar_codigo_fonte(codigo_fonte):
             posicao += len(match_operadores.group())
             continue
 
-
         match_ponto_flutuante = padrao_ponto_flutuante.match(codigo_fonte, posicao)
         if match_ponto_flutuante:
             tokens.append(('Ponto Flutuante', match_ponto_flutuante.group()))
@@ -58,11 +63,9 @@ def tokenizar_codigo_fonte(codigo_fonte):
             posicao += len(match_inteiros.group())
             continue
 
-        
         raise RuntimeError(f'Token não identificado na posição => {posicao} {codigo_fonte[posicao]}')
     
     return tokens
-
 
 if __name__ == '__main__':
     with open('testes/teste5.c', 'r') as file:
