@@ -1,8 +1,7 @@
 # Trabalho: Analisador Léxico
 
 Nome dos alunos e números de matrícula:
-* Aluno: ___________________________
-* Aluno: ___________________________
+* Aluno: Victor Hugo Claudio Gomes 2019111200
 * Disciplina: Compiladores
 * Semestre: 2023/1
 * Data de entrega: 26/04/2023
