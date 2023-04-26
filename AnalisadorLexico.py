@@ -20,7 +20,7 @@ def tokenizar_codigo_fonte(codigo_fonte):
         if match_espaco_branco:
             posicao = match_espaco_branco.end()
             continue
-        
+
         match_identificador = padrao_identificador.match(codigo_fonte, posicao)
         if match_identificador:
             identificador = match_identificador.group()
@@ -70,6 +70,8 @@ def tokenizar_codigo_fonte(codigo_fonte):
 if __name__ == '__main__':
     with open('testes/teste3.c', 'r') as file:
         input = file.read()
+        input = re.sub('//.*', ' ', input)  
+        input = re.sub('(/\*(.|\n)*?\*/)', ' ', input)  
         tokens = tokenizar_codigo_fonte(input)
         for token in tokens:
             print(token)
